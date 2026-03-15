@@ -1,0 +1,1368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Ashir Raza — Brand OS Developer | 36+ Tools, 11 AI Modules</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400;1,600&family=Outfit:wght@300;400;500;600;700&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#07060C;--ink2:#0D0B16;--ink3:#13101F;--ink4:#1A1728;
+  --gold:#C8A96E;--goldL:#E2C98A;--goldD:#9A7A3E;
+  --cream:#EDE5D8;--creamD:#B8AFA3;
+  --muted:rgba(237,229,216,0.42);
+  --border:rgba(200,169,110,0.13);
+  --borderH:rgba(200,169,110,0.35);
+  --green:#6EE7B7;--blue:#93C5FD;--purple:#C4B5FD;--rose:#FDA4AF;
+}
+html{scroll-behavior:smooth}
+body{background:var(--ink);color:var(--cream);font-family:'Outfit',sans-serif;overflow-x:hidden;cursor:none;line-height:1.6}
+::-webkit-scrollbar{width:2px}
+::-webkit-scrollbar-thumb{background:rgba(200,169,110,0.2);border-radius:2px}
+
+/* Cursor */
+#cur{position:fixed;width:7px;height:7px;background:var(--gold);border-radius:50%;pointer-events:none;z-index:9999;mix-blend-mode:difference;transition:transform .15s}
+#curR{position:fixed;width:28px;height:28px;border:1px solid rgba(200,169,110,0.4);border-radius:50%;pointer-events:none;z-index:9998;transition:all .22s ease}
+
+/* Animations */
+@keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+@keyframes shimmer{0%{background-position:200% center}100%{background-position:-200% center}}
+@keyframes floatY{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.8)}}
+@keyframes lineIn{from{width:0}to{width:100%}}
+@keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+@keyframes grain{0%,100%{transform:translate(0,0)}25%{transform:translate(-1%,2%)}75%{transform:translate(2%,-1%)}}
+
+/* BG */
+.bg{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.bg-mesh{position:absolute;inset:0;
+  background:radial-gradient(ellipse 70% 60% at 80% -5%,rgba(200,169,110,0.09) 0%,transparent 55%),
+  radial-gradient(ellipse 50% 40% at -5% 90%,rgba(200,169,110,0.05) 0%,transparent 55%),
+  radial-gradient(ellipse 30% 50% at 50% 110%,rgba(120,90,200,0.04) 0%,transparent 60%)}
+.bg-dots{position:absolute;inset:0;
+  background-image:radial-gradient(circle,rgba(200,169,110,0.07) 1px,transparent 1px);
+  background-size:44px 44px}
+.bg-noise{position:absolute;inset:-50%;width:200%;height:200%;opacity:.3;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.05'/%3E%3C/svg%3E");
+  animation:grain 9s steps(10) infinite}
+.bg-vig{position:absolute;inset:0;background:radial-gradient(ellipse at center,transparent 25%,rgba(7,6,12,.75) 100%)}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;height:68px;
+  display:flex;align-items:center;justify-content:space-between;padding:0 48px;
+  background:rgba(7,6,12,.82);backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border)}
+.nav-name{font-family:'Cormorant Garamond',serif;font-size:19px;font-weight:600;
+  letter-spacing:2px;color:var(--cream)}
+.nav-name span{color:var(--gold)}
+.nav-right{display:flex;align-items:center;gap:28px}
+.nav-link{font-size:11px;letter-spacing:1.5px;color:var(--muted);text-decoration:none;transition:color .2s;font-weight:500}
+.nav-link:hover{color:var(--cream)}
+.nav-cta{padding:9px 22px;border:1px solid rgba(200,169,110,0.35);border-radius:6px;
+  color:var(--gold);font-size:11px;font-weight:600;letter-spacing:1.5px;
+  text-decoration:none;transition:all .2s;background:transparent}
+.nav-cta:hover{background:rgba(200,169,110,0.1);border-color:var(--gold)}
+
+/* HERO */
+.hero{position:relative;z-index:1;min-height:100vh;display:grid;
+  grid-template-columns:1fr 1fr;gap:0;align-items:center;padding:0 48px;padding-top:68px}
+.hero-left{padding-right:60px}
+.hero-tag{display:inline-flex;align-items:center;gap:8px;padding:6px 16px;
+  border:1px solid rgba(200,169,110,0.2);border-radius:30px;
+  font-size:10px;letter-spacing:2.5px;color:var(--gold);font-weight:600;
+  background:rgba(200,169,110,0.05);margin-bottom:32px;
+  animation:fadeUp .7s ease both}
+.hero-tag-dot{width:5px;height:5px;background:var(--gold);border-radius:50%;animation:pulse 2s infinite}
+.hero-h1{font-family:'Cormorant Garamond',serif;font-size:clamp(44px,5.5vw,72px);
+  font-weight:700;line-height:1.05;margin-bottom:20px;
+  animation:fadeUp .7s .1s ease both}
+.hero-h1 em{font-style:italic;
+  background:linear-gradient(135deg,var(--gold),var(--goldL),var(--gold));
+  background-size:200% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  animation:shimmer 5s linear infinite}
+.hero-sub{font-size:16px;color:var(--muted);line-height:1.85;margin-bottom:36px;
+  font-weight:300;max-width:480px;animation:fadeUp .7s .2s ease both}
+.hero-sub strong{color:var(--cream);font-weight:500}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap;animation:fadeUp .7s .3s ease both}
+.btn-gold{padding:14px 32px;background:linear-gradient(135deg,var(--gold),var(--goldL));
+  border:none;border-radius:7px;color:var(--ink);font-family:'Outfit',sans-serif;
+  font-size:13px;font-weight:700;letter-spacing:.5px;cursor:pointer;
+  text-decoration:none;transition:all .25s;display:inline-flex;align-items:center;gap:8px}
+.btn-gold:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(200,169,110,0.3)}
+.btn-outline{padding:14px 28px;background:transparent;
+  border:1px solid rgba(237,229,216,0.15);border-radius:7px;
+  color:var(--creamD);font-family:'Outfit',sans-serif;font-size:13px;
+  cursor:pointer;text-decoration:none;transition:all .2s;display:inline-flex;align-items:center;gap:8px}
+.btn-outline:hover{border-color:var(--borderH);color:var(--cream)}
+
+/* Hero Right — Case Study Preview Card */
+.hero-right{position:relative;animation:fadeUp .7s .4s ease both}
+.preview-card{
+  background:var(--ink2);
+  border:1px solid var(--border);
+  border-radius:20px;
+  overflow:hidden;
+  box-shadow:0 40px 100px rgba(0,0,0,.6);
+}
+.preview-topbar{
+  padding:14px 20px;
+  background:var(--ink3);
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:10px;
+}
+.preview-dots{display:flex;gap:6px}
+.preview-dot{width:10px;height:10px;border-radius:50%}
+.preview-url{flex:1;background:rgba(255,255,255,0.04);border-radius:5px;
+  padding:5px 12px;font-family:'DM Mono',monospace;font-size:11px;
+  color:rgba(237,229,216,0.3);text-align:center}
+.preview-body{padding:20px}
+.preview-brand{display:flex;align-items:center;gap:12px;margin-bottom:16px;
+  padding-bottom:16px;border-bottom:1px solid var(--border)}
+.preview-logo{width:36px;height:36px;border-radius:8px;
+  background:rgba(200,169,110,0.1);border:1px solid rgba(200,169,110,0.2);
+  display:flex;align-items:center;justify-content:center;font-size:16px}
+.preview-brand-name{font-family:'Cormorant Garamond',serif;font-size:14px;font-weight:600;letter-spacing:1px}
+.preview-brand-sub{font-size:10px;color:var(--muted);letter-spacing:.5px}
+.preview-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px}
+.preview-stat{background:var(--ink3);border-radius:8px;padding:12px 10px;text-align:center}
+.preview-stat-val{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:700;color:var(--gold);line-height:1}
+.preview-stat-label{font-size:9px;color:var(--muted);letter-spacing:1px;margin-top:3px}
+.preview-tabs{display:flex;gap:4px;margin-bottom:14px;flex-wrap:wrap}
+.preview-tab{padding:5px 10px;border-radius:5px;font-size:9px;letter-spacing:.5px;font-weight:600;border:1px solid transparent}
+.preview-tab.active{background:rgba(200,169,110,0.1);border-color:rgba(200,169,110,0.25);color:var(--gold)}
+.preview-tab.inactive{color:var(--muted)}
+.preview-row{display:flex;align-items:center;gap:10px;padding:8px 10px;
+  background:var(--ink3);border-radius:8px;margin-bottom:6px}
+.preview-row-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.preview-row-text{font-size:11px;color:var(--muted);flex:1}
+.preview-row-badge{font-size:9px;padding:2px 8px;border-radius:10px;font-weight:600}
+.preview-float{
+  position:absolute;top:-20px;right:-20px;
+  background:var(--ink2);border:1px solid var(--border);
+  border-radius:12px;padding:12px 16px;
+  display:flex;align-items:center;gap:10px;
+  box-shadow:0 20px 50px rgba(0,0,0,.5);
+  animation:floatY 4s ease infinite;
+}
+.preview-float-icon{font-size:20px}
+.preview-float-text{font-size:11px;font-weight:600;margin-bottom:2px}
+.preview-float-sub{font-size:10px;color:var(--muted)}
+.preview-float2{
+  position:absolute;bottom:-16px;left:-16px;
+  background:var(--ink2);border:1px solid rgba(110,231,183,0.2);
+  border-radius:12px;padding:10px 14px;
+  display:flex;align-items:center;gap:8px;
+  box-shadow:0 20px 50px rgba(0,0,0,.5);
+  animation:floatY 4s 1.5s ease infinite;
+}
+
+/* SECTION COMMONS */
+.section{position:relative;z-index:1;padding:100px 48px}
+.section-inner{max-width:1100px;margin:0 auto}
+.eyebrow{font-size:10px;letter-spacing:3px;font-weight:600;color:var(--gold);margin-bottom:14px;display:block}
+.section-h2{font-family:'Cormorant Garamond',serif;font-size:clamp(32px,4.5vw,52px);
+  font-weight:700;line-height:1.1;margin-bottom:14px}
+.section-h2 em{color:var(--gold);font-style:italic}
+.rule{width:40px;height:1px;background:linear-gradient(90deg,var(--gold),transparent);margin:16px 0 0}
+.section-p{font-size:15px;color:var(--muted);line-height:1.85;font-weight:300;max-width:580px}
+
+/* ABOUT SECTION */
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;margin-top:64px}
+.about-text p{font-size:15px;color:var(--muted);line-height:1.9;font-weight:300;margin-bottom:18px}
+.about-text p strong{color:var(--cream);font-weight:500}
+.skills-wrap{display:flex;flex-wrap:wrap;gap:8px;margin-top:24px}
+.skill-pill{padding:6px 16px;border:1px solid var(--border);border-radius:30px;
+  font-size:12px;color:var(--creamD);letter-spacing:.5px;transition:all .2s}
+.skill-pill:hover{border-color:var(--borderH);color:var(--cream)}
+.about-right{display:flex;flex-direction:column;gap:14px}
+.about-stat-card{padding:24px;background:var(--ink2);border:1px solid var(--border);
+  border-radius:14px;transition:border-color .2s}
+.about-stat-card:hover{border-color:var(--borderH)}
+.about-stat-num{font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:700;
+  color:var(--gold);line-height:1;margin-bottom:4px}
+.about-stat-label{font-size:13px;color:var(--muted)}
+
+/* CASE STUDY */
+.case-hero{
+  border:1px solid var(--border);border-radius:24px;overflow:hidden;
+  margin-top:64px;background:var(--ink2);
+}
+.case-hero-header{
+  padding:48px 56px;
+  background:linear-gradient(135deg,var(--ink3) 0%,var(--ink2) 100%);
+  border-bottom:1px solid var(--border);
+  display:grid;grid-template-columns:1fr auto;gap:40px;align-items:center;
+}
+.case-brand-tag{display:inline-flex;align-items:center;gap:8px;padding:5px 14px;
+  border:1px solid rgba(200,169,110,0.25);border-radius:20px;
+  font-size:10px;letter-spacing:2px;color:var(--gold);font-weight:600;margin-bottom:20px}
+.case-title{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,4vw,48px);
+  font-weight:700;line-height:1.1;margin-bottom:12px}
+.case-desc{font-size:14px;color:var(--muted);line-height:1.8;max-width:520px}
+.case-metrics{display:flex;flex-direction:column;gap:12px;min-width:200px}
+.case-metric{padding:16px 20px;background:rgba(200,169,110,0.05);
+  border:1px solid rgba(200,169,110,0.15);border-radius:12px;text-align:center}
+.case-metric-val{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:700;
+  color:var(--gold);line-height:1;margin-bottom:4px}
+.case-metric-label{font-size:10px;color:var(--muted);letter-spacing:1px}
+.case-body{padding:56px}
+.case-section-title{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:700;
+  margin-bottom:20px;display:flex;align-items:center;gap:12px}
+.case-section-title::before{content:"";width:3px;height:24px;background:var(--gold);border-radius:2px;flex-shrink:0}
+.features-mosaic{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:48px}
+.feat-tile{padding:24px;background:var(--ink3);border:1px solid var(--border);
+  border-radius:14px;transition:all .25s;position:relative;overflow:hidden}
+.feat-tile::after{content:"";position:absolute;inset:0;opacity:0;
+  background:radial-gradient(ellipse at 0% 0%,rgba(200,169,110,0.07) 0%,transparent 60%);
+  transition:opacity .3s}
+.feat-tile:hover{border-color:var(--borderH);transform:translateY(-3px)}
+.feat-tile:hover::after{opacity:1}
+.feat-tile.span2{grid-column:span 2}
+.feat-icon{font-size:26px;margin-bottom:14px}
+.feat-tile h3{font-size:14px;font-weight:600;margin-bottom:6px}
+.feat-tile p{font-size:12px;color:var(--muted);line-height:1.7}
+.feat-tag{display:inline-block;padding:3px 10px;margin-top:10px;
+  background:rgba(200,169,110,0.07);border:1px solid rgba(200,169,110,0.18);
+  border-radius:20px;font-size:9px;color:var(--gold);letter-spacing:1px;font-weight:600}
+.tech-stack{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+.tech-badge{padding:8px 18px;background:var(--ink3);border:1px solid var(--border);
+  border-radius:8px;font-family:'DM Mono',monospace;font-size:12px;color:var(--creamD)}
+.result-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;
+  padding:32px;background:rgba(200,169,110,0.04);
+  border:1px solid rgba(200,169,110,0.15);border-radius:16px;margin:32px 0}
+.result-item{text-align:center}
+.result-num{font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:700;
+  color:var(--gold);line-height:1;margin-bottom:6px}
+.result-label{font-size:11px;color:var(--muted);letter-spacing:.5px;line-height:1.5}
+.testimonial-block{margin-top:32px;padding:32px 36px;
+  background:var(--ink3);border:1px solid var(--border);border-radius:16px;
+  position:relative;overflow:hidden}
+.testimonial-block::before{content:"\201C";position:absolute;top:-10px;left:20px;
+  font-family:'Cormorant Garamond',serif;font-size:120px;color:rgba(200,169,110,0.08);
+  line-height:1;pointer-events:none}
+.testimonial-text{font-family:'Cormorant Garamond',serif;font-size:20px;font-style:italic;
+  color:var(--cream);line-height:1.75;margin-bottom:20px;position:relative}
+.testimonial-author{display:flex;align-items:center;gap:14px}
+.testi-av{width:44px;height:44px;border-radius:50%;border:1px solid rgba(200,169,110,0.25);
+  background:rgba(200,169,110,0.08);display:flex;align-items:center;justify-content:center;font-size:18px}
+.testi-name{font-size:14px;font-weight:600}
+.testi-role{font-size:11px;color:var(--muted)}
+
+/* SERVICES */
+.services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:56px}
+.service-card{padding:32px 28px;background:var(--ink2);border:1px solid var(--border);
+  border-radius:16px;transition:all .3s;position:relative;overflow:hidden}
+.service-card::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--gold),transparent);transform:scaleX(0);
+  transform-origin:left;transition:transform .3s}
+.service-card:hover{border-color:var(--borderH);transform:translateY(-4px)}
+.service-card:hover::before{transform:scaleX(1)}
+.service-num{font-family:'DM Mono',monospace;font-size:11px;color:rgba(200,169,110,0.4);
+  letter-spacing:2px;margin-bottom:20px}
+.service-icon{font-size:32px;margin-bottom:16px}
+.service-card h3{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:700;
+  margin-bottom:10px}
+.service-card p{font-size:13px;color:var(--muted);line-height:1.75}
+.service-price{display:inline-flex;align-items:center;gap:6px;margin-top:16px;
+  padding:5px 14px;background:rgba(200,169,110,0.07);border:1px solid rgba(200,169,110,0.18);
+  border-radius:20px;font-size:11px;color:var(--gold);font-weight:600}
+
+/* REIGNN CTA */
+.reignn-cta{
+  margin-top:80px;padding:64px 56px;
+  background:var(--ink2);border:1px solid rgba(200,169,110,0.2);
+  border-radius:24px;position:relative;overflow:hidden;text-align:center;
+}
+.reignn-cta::before{content:"";position:absolute;inset:0;
+  background:radial-gradient(ellipse at 50% 0%,rgba(200,169,110,0.08) 0%,transparent 60%)}
+.reignn-cta-eyebrow{font-size:10px;letter-spacing:3px;color:var(--gold);
+  font-weight:600;margin-bottom:18px;position:relative}
+.reignn-cta-title{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,4vw,48px);
+  font-weight:700;margin-bottom:14px;position:relative;line-height:1.1}
+.reignn-cta-title em{color:var(--gold);font-style:italic}
+.reignn-cta-sub{font-size:15px;color:var(--muted);max-width:520px;margin:0 auto 36px;
+  line-height:1.8;font-weight:300;position:relative}
+
+/* CONTACT */
+.contact-wrap{display:grid;grid-template-columns:1fr 1fr;gap:60px;margin-top:64px;align-items:start}
+.contact-info h3{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:700;margin-bottom:16px}
+.contact-info p{font-size:14px;color:var(--muted);line-height:1.85;margin-bottom:24px;font-weight:300}
+.contact-links{display:flex;flex-direction:column;gap:12px}
+.contact-link{display:flex;align-items:center;gap:12px;padding:14px 18px;
+  background:var(--ink2);border:1px solid var(--border);border-radius:10px;
+  text-decoration:none;transition:all .2s}
+.contact-link:hover{border-color:var(--borderH);background:var(--ink3)}
+.contact-link-icon{font-size:18px;width:32px;text-align:center}
+.contact-link-text{font-size:13px;font-weight:500;color:var(--cream)}
+.contact-link-sub{font-size:11px;color:var(--muted)}
+.contact-form-area{padding:32px;background:var(--ink2);border:1px solid var(--border);border-radius:16px}
+.contact-form-area h3{font-size:16px;font-weight:600;margin-bottom:20px}
+.form-group{margin-bottom:14px}
+.form-label{font-size:11px;letter-spacing:1px;color:var(--gold);font-weight:600;margin-bottom:6px;display:block}
+.form-input{width:100%;padding:12px 16px;background:rgba(255,255,255,0.03);
+  border:1px solid var(--border);border-radius:8px;color:var(--cream);
+  font-family:'Outfit',sans-serif;font-size:13px;outline:none;transition:border .2s}
+.form-input:focus{border-color:rgba(200,169,110,0.4)}
+.form-input::placeholder{color:rgba(237,229,216,0.2)}
+textarea.form-input{height:100px;resize:none}
+
+/* Mockups */
+.mockup-section{margin:48px 0}
+.mockup-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:24px}
+.mockup-card{border-radius:14px;overflow:hidden;border:1px solid var(--border);
+  background:var(--ink2);transition:all .3s;position:relative}
+.mockup-card:hover{border-color:var(--borderH);transform:translateY(-4px);
+  box-shadow:0 20px 60px rgba(0,0,0,.5)}
+.mockup-card.large{grid-column:span 2}
+.mockup-topbar{background:var(--ink3);padding:10px 14px;display:flex;align-items:center;gap:8px;
+  border-bottom:1px solid var(--border)}
+.mockup-dots{display:flex;gap:5px}
+.mockup-dot{width:8px;height:8px;border-radius:50%}
+.mockup-title{font-family:'DM Mono',monospace;font-size:10px;color:rgba(237,229,216,.3);
+  flex:1;text-align:center}
+.mockup-body{padding:16px}
+.mockup-label{position:absolute;bottom:10px;right:10px;padding:4px 10px;
+  background:rgba(7,6,12,.85);border:1px solid var(--border);border-radius:6px;
+  font-size:10px;color:var(--gold);letter-spacing:1px;font-weight:600}
+
+/* Pricing Page */
+.pricing-section{background:rgba(255,255,255,0.01);border-top:1px solid var(--border)}
+.pricing-tabs{display:flex;gap:4px;background:var(--ink2);border:1px solid var(--border);
+  border-radius:10px;padding:4px;margin-bottom:40px;width:fit-content}
+.ptab{padding:10px 24px;border-radius:7px;font-size:12px;font-weight:600;
+  letter-spacing:.5px;cursor:pointer;transition:all .2s;border:none;
+  font-family:'Outfit',sans-serif;background:transparent;color:var(--muted)}
+.ptab.active{background:rgba(200,169,110,0.12);border:1px solid rgba(200,169,110,0.3);color:var(--gold)}
+.pricing-panel{display:none}.pricing-panel.active{display:block}
+.price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-bottom:32px}
+.price-card{padding:32px 28px;background:var(--ink2);border:1px solid var(--border);
+  border-radius:18px;position:relative;transition:border-color .25s}
+.price-card:hover{border-color:var(--borderH)}
+.price-card.featured{border-color:rgba(200,169,110,0.4);background:var(--ink3)}
+.price-badge{position:absolute;top:-12px;left:50%;transform:translateX(-50%);
+  padding:4px 16px;background:linear-gradient(135deg,var(--gold),var(--goldL));
+  border-radius:20px;font-size:10px;font-weight:700;color:var(--ink);white-space:nowrap}
+.price-name{font-size:10px;letter-spacing:2.5px;color:var(--gold);font-weight:700;margin-bottom:16px}
+.price-amount{font-family:'Cormorant Garamond',serif;font-size:44px;font-weight:700;
+  color:var(--cream);line-height:1;margin-bottom:4px}
+.price-amount .curr{font-size:20px;vertical-align:super;font-family:'Outfit',sans-serif;font-weight:300}
+.price-period{font-size:12px;color:var(--muted);margin-bottom:24px}
+.price-divider{height:1px;background:var(--border);margin-bottom:20px}
+.price-list{list-style:none;margin-bottom:24px}
+.price-list li{font-size:12px;color:var(--muted);padding:7px 0;
+  border-bottom:1px solid rgba(255,255,255,.03);
+  display:flex;gap:8px;align-items:flex-start;line-height:1.5}
+.price-list li .ck{color:var(--gold);flex-shrink:0}
+.price-btn{width:100%;padding:13px;border-radius:8px;font-family:'Outfit',sans-serif;
+  font-size:13px;font-weight:600;cursor:pointer;transition:all .2s;border:none;letter-spacing:.3px}
+.price-btn.gold{background:linear-gradient(135deg,var(--gold),var(--goldL));color:var(--ink)}
+.price-btn.gold:hover{transform:translateY(-2px);box-shadow:0 10px 32px rgba(200,169,110,.3)}
+.price-btn.ghost{background:transparent;border:1px solid rgba(200,169,110,.25);color:var(--gold)}
+.price-btn.ghost:hover{background:rgba(200,169,110,.07)}
+.compare-table{width:100%;border-collapse:collapse;margin-top:32px}
+.compare-table th{padding:12px 16px;text-align:left;font-size:10px;letter-spacing:1.5px;
+  color:var(--muted);border-bottom:1px solid var(--border);font-weight:600}
+.compare-table td{padding:12px 16px;font-size:13px;border-bottom:1px solid rgba(255,255,255,.03)}
+.compare-table td:first-child{color:var(--creamD)}
+.compare-table td:not(:first-child){text-align:center}
+.compare-table tr:hover td{background:rgba(255,255,255,.015)}
+.ct-yes{color:var(--green);font-weight:600}
+.ct-no{color:rgba(237,229,216,.2)}
+.ct-val{color:var(--gold);font-weight:600}
+
+/* Footer */
+footer{position:relative;z-index:1;padding:40px 48px;
+  border-top:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px}
+.footer-name{font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;letter-spacing:2px}
+.footer-name span{color:var(--gold)}
+.footer-copy{font-size:11px;color:rgba(237,229,216,0.18);letter-spacing:1px}
+.footer-links{display:flex;gap:24px}
+.footer-link{font-size:11px;color:rgba(237,229,216,0.25);text-decoration:none;
+  letter-spacing:1px;transition:color .2s}
+.footer-link:hover{color:var(--gold)}
+
+/* Divider */
+.gold-line{height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);margin:80px 0 0}
+
+/* Responsive */
+@media(max-width:960px){
+  nav{padding:0 24px}
+  .hero{grid-template-columns:1fr;padding:100px 24px 60px;text-align:center}
+  .hero-left{padding-right:0;margin-bottom:48px}
+  .hero-actions{justify-content:center}
+  .hero-sub{margin:0 auto 36px}
+  .hero-right{display:none}
+  .section{padding:72px 24px}
+  .about-grid{grid-template-columns:1fr}
+  .case-hero-header{grid-template-columns:1fr;padding:36px}
+  .case-body{padding:36px}
+  .features-mosaic{grid-template-columns:1fr 1fr}
+  .feat-tile.span2{grid-column:span 1}
+  .result-strip{grid-template-columns:repeat(2,1fr)}
+  .services-grid{grid-template-columns:1fr}
+  .contact-wrap{grid-template-columns:1fr}
+  .reignn-cta{padding:48px 28px}
+  footer{padding:32px 24px;flex-direction:column;text-align:center}
+  .footer-links{justify-content:center}
+}
+</style>
+</head>
+<body>
+
+<div id="cur"></div>
+<div id="curR"></div>
+
+<!-- BG -->
+<div class="bg">
+  <div class="bg-mesh"></div>
+  <div class="bg-dots"></div>
+  <div class="bg-noise"></div>
+  <div class="bg-vig"></div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-name">Ashir <span>Raza</span></div>
+  <div class="nav-right">
+    <a href="#work" class="nav-link">WORK</a>
+    <a href="#pricing" class="nav-link">PRICING</a>
+    <a href="#services" class="nav-link">SERVICES</a>
+    <a href="#contact" class="nav-link">CONTACT</a>
+    <a href="https://ashirraza246.github.io/reignn/" target="_blank" class="nav-cta">REIGNN →</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero" style="position:relative;z-index:1">
+  <div class="hero-left">
+    <div class="hero-tag"><span class="hero-tag-dot"></span> BRAND OS DEVELOPER · KARACHI, PAKISTAN</div>
+    <h1 class="hero-h1">I Build Systems<br/>That <em>Command Brands.</em></h1>
+    <p class="hero-sub">
+      I design and develop <strong>complete brand operating systems</strong> — 36+ tools, 20+ tabs, and 11 AI modules unified in one intelligent portal. Complete brand management in one portal, built for serious Pakistani businesses.
+    </p>
+    <div class="hero-actions">
+      <a href="#work" class="btn-gold">See My Work ↓</a>
+      <a href="#contact" class="btn-outline">Get In Touch</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div style="position:relative;padding:20px">
+      <div class="preview-float">
+        <span class="preview-float-icon">🧠</span>
+        <div>
+          <div class="preview-float-text">AI Brain Active</div>
+          <div class="preview-float-sub">6 specialist modules</div>
+        </div>
+      </div>
+      <div class="preview-card">
+        <div class="preview-topbar">
+          <div class="preview-dots">
+            <div class="preview-dot" style="background:#FF5F57"></div>
+            <div class="preview-dot" style="background:#FEBC2E"></div>
+            <div class="preview-dot" style="background:#28C840"></div>
+          </div>
+          <div class="preview-url">as-khushboo-os.vercel.app</div>
+        </div>
+        <div class="preview-body">
+          <div class="preview-brand">
+            <div class="preview-logo">🌹</div>
+            <div>
+              <div class="preview-brand-name">#AS KHUSHBOO</div>
+              <div class="preview-brand-sub">LUXURY PERFUMES · KARACHI</div>
+            </div>
+          </div>
+          <div class="preview-stats">
+            <div class="preview-stat">
+              <div class="preview-stat-val">36+</div>
+              <div class="preview-stat-label">TOOLS</div>
+            </div>
+            <div class="preview-stat">
+              <div class="preview-stat-val">20+</div>
+              <div class="preview-stat-label">TABS</div>
+            </div>
+            <div class="preview-stat">
+              <div class="preview-stat-val">11</div>
+              <div class="preview-stat-label">AI MODS</div>
+            </div>
+          </div>
+          <div class="preview-tabs">
+            <div class="preview-tab active">Dashboard</div>
+            <div class="preview-tab inactive">Orders</div>
+            <div class="preview-tab inactive">Team</div>
+            <div class="preview-tab inactive">AI Brain</div>
+          </div>
+          <div class="preview-row">
+            <div class="preview-row-dot" style="background:#6EE7B7"></div>
+            <div class="preview-row-text">Shahkaar — Order #1042</div>
+            <div class="preview-row-badge" style="background:rgba(110,231,183,0.1);color:#6EE7B7">Delivered</div>
+          </div>
+          <div class="preview-row">
+            <div class="preview-row-dot" style="background:#FCD34D"></div>
+            <div class="preview-row-text">Gulnaaz — Order #1043</div>
+            <div class="preview-row-badge" style="background:rgba(252,211,77,0.1);color:#FCD34D">Pending</div>
+          </div>
+          <div class="preview-row">
+            <div class="preview-row-dot" style="background:#93C5FD"></div>
+            <div class="preview-row-text">Rooh — Order #1044</div>
+            <div class="preview-row-badge" style="background:rgba(147,197,253,0.1);color:#93C5FD">Dispatch</div>
+          </div>
+        </div>
+      </div>
+      <div class="preview-float2">
+        <span style="font-size:16px">✅</span>
+        <div>
+          <div style="font-size:11px;font-weight:600;color:var(--green)">Portal Live</div>
+          <div style="font-size:10px;color:var(--muted)">PWA · Mobile Ready</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="section" id="about">
+  <div class="section-inner">
+    <span class="eyebrow">ABOUT</span>
+    <h2 class="section-h2">Not just a developer.<br/><em>A brand systems builder.</em></h2>
+    <div class="rule"></div>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>Most developers build websites. I build <strong>systems that run entire businesses.</strong></p>
+        <p>Based in Karachi, I specialise in creating complete brand operating portals — <strong>36+ tools, 20+ tabs, and 11 AI modules</strong> in one unified platform. Think of it as giving a brand its own fully-staffed digital command centre.</p>
+        <p>My work is most impactful for <strong>small to mid-size Pakistani brands</strong> that have outgrown WhatsApp and Excel, and need a proper system — without paying enterprise prices.</p>
+        <p>Every portal I build is <strong>mobile-ready as a PWA app</strong>, AI-powered, and designed to actually be used by real teams — not just look good in a screenshot.</p>
+        <div class="skills-wrap">
+          <span class="skill-pill">React / JSX</span>
+          <span class="skill-pill">Firebase</span>
+          <span class="skill-pill">AI Integration</span>
+          <span class="skill-pill">PWA Development</span>
+          <span class="skill-pill">Vercel Deployment</span>
+          <span class="skill-pill">Brand Strategy</span>
+        <span class="skill-pill">AI Integration (11 Modules)</span>
+        <span class="skill-pill">Multi-tab Portal Architecture</span>
+          <span class="skill-pill">UI/UX Design</span>
+          <span class="skill-pill">Cloudinary</span>
+        </div>
+      </div>
+      <div class="about-right">
+        <div class="about-stat-card">
+          <div class="about-stat-num">8,000+</div>
+          <div class="about-stat-label">Lines of production code written for #AS KHUSHBOO Brand OS</div>
+        </div>
+        <div class="about-stat-card">
+          <div class="about-stat-num">36+</div>
+          <div class="about-stat-label">Tools & features built — from AI brain to attendance tracking</div>
+        </div>
+        <div class="about-stat-card">
+          <div class="about-stat-num">1</div>
+          <div class="about-stat-label">Portal that replaced 10+ separate tools for one brand</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CASE STUDY -->
+<section class="section" id="work" style="padding-top:0">
+  <div class="section-inner">
+    <span class="eyebrow">CASE STUDY</span>
+    <h2 class="section-h2">A complete operating system<br/><em>built for a luxury brand.</em></h2>
+    <div class="rule"></div>
+
+    <div class="case-hero">
+      <div class="case-hero-header">
+        <div>
+          <div class="case-brand-tag">🌹 #AS KHUSHBOO · KARACHI</div>
+          <h2 class="case-title">Brand OS —<br/>From Zero to Full Command Centre</h2>
+          <p class="case-desc">A custom-built brand operating system for a luxury perfume brand in Karachi — 36+ integrated tools, 20+ functional tabs, and 11 AI modules. Replacing WhatsApp chaos and Excel sheets with one intelligent command centre.</p>
+        </div>
+        <div class="case-metrics">
+          <div class="case-metric">
+            <div class="case-metric-val">36+</div>
+            <div class="case-metric-label">TOOLS BUILT</div>
+          </div>
+          <div class="case-metric">
+            <div class="case-metric-val">20+</div>
+            <div class="case-metric-label">TABS BUILT</div>
+          </div>
+          <div class="case-metric">
+            <div class="case-metric-val">11</div>
+            <div class="case-metric-label">AI MODULES</div>
+          </div>
+          <div class="case-metric">
+            <div class="case-metric-val">10+</div>
+            <div class="case-metric-label">TOOLS REPLACED</div>
+          </div>
+          <div class="case-metric">
+            <div class="case-metric-val">PWA</div>
+            <div class="case-metric-label">MOBILE APP</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="case-body">
+
+        <!-- The Challenge -->
+        <div style="margin-bottom:48px">
+          <h3 class="case-section-title">The Challenge</h3>
+          <p style="font-size:14px;color:var(--muted);line-height:1.85;max-width:680px;font-weight:300">
+            #AS KHUSHBOO was preparing for launch with 6 premium fragrances and 300 bottles of stock — but no system to manage orders, team, inventory, or customer relationships. Everything lived in WhatsApp threads and mental notes. They needed a complete, professional operating system before day one — one that could handle a full team, AI tools, real-time analytics, and a growing customer base.
+          </p>
+        </div>
+
+        <!-- Features Built -->
+        <div style="margin-bottom:48px">
+          <h3 class="case-section-title">What Was Built — 36+ Tools Across 20+ Tabs</h3>
+          <div class="features-mosaic">
+            <div class="feat-tile span2">
+              <div class="feat-icon">📦</div>
+              <h3>Order Command Centre</h3>
+              <p>5-stage visual pipeline (Pending → Confirmed → Dispatched → Delivered). One-click WhatsApp dispatch messages, customer tracking, order history, low-stock alerts, and daily sales snapshot.</p>
+              <span class="feat-tag">REAL-TIME</span>
+            </div>
+            <div class="feat-tile">
+              <div class="feat-icon">🤖</div>
+              <h3>AI Business Brain</h3>
+              <p>11 specialist AI modules — CEO, Marketing, Sales, Inventory, Social Media, and Support. Fully multilingual — works in English, Roman Urdu, and Urdu.</p>
+              <span class="feat-tag">GEMINI AI</span>
+            </div>
+            <div class="feat-tile">
+              <div class="feat-icon">👥</div>
+              <h3>Team Operating System</h3>
+              <p>15+ custom roles with granular access control. Attendance with flexible hours, leave requests & approvals, penalty system, performance tracking, and weekly attendance reports.</p>
+              <span class="feat-tag">MULTI-ROLE</span>
+            </div>
+            <div class="feat-tile">
+              <div class="feat-icon">🏆</div>
+              <h3>Loyalty & Coupon Engine</h3>
+              <p>Automatic 4-tier loyalty program (Bronze, Silver, Gold, VIP) based on order history. Full coupon manager with discount codes, expiry dates, and usage tracking.</p>
+              <span class="feat-tag">RETENTION</span>
+            </div>
+            <div class="feat-tile span2">
+              <div class="feat-icon">🧠</div>
+              <h3>Brand Intelligence Layer</h3>
+              <p>Brand Health Score (0–100) with 4 weighted components. AI-generated Daily Briefing every morning. Smart Alerts for critical business events. Weekly Report Generator — all powered by live portal data.</p>
+              <span class="feat-tag">AI GENERATED</span>
+            </div>
+            <div class="feat-tile">
+              <div class="feat-icon">📈</div>
+              <h3>Sales Analytics Engine</h3>
+              <p>Revenue trends, product performance charts, expense tracker, customer loyalty analytics, and influencer campaign ROI tracking — all in real time.</p>
+              <span class="feat-tag">LIVE DATA</span>
+            </div>
+            <div class="feat-tile">
+              <div class="feat-icon">📅</div>
+              <h3>Content & Marketing Hub</h3>
+              <p>Content calendar for scheduling posts across all platforms. Influencer tracker with campaign management. Follow-up system for leads and customers. Return & refund management.</p>
+              <span class="feat-tag">MARKETING</span>
+            </div>
+            <div class="feat-tile">
+              <div class="feat-icon">🛒</div>
+              <h3>E-Commerce Integration</h3>
+              <p>Brand connected to all sales channels — website, Instagram, WhatsApp, Facebook, TikTok — tracked from one dashboard. Order sources, channel performance, and conversion data unified.</p>
+              <span class="feat-tag">OMNICHANNEL</span>
+            </div>
+            <div class="feat-tile">
+              <div class="feat-icon">🧰</div>
+              <h3>Role-Based Tools Hub</h3>
+              <p>Every team member sees a workspace tailored to their role — Designer gets briefs & brand guidelines, Photographer gets shoot schedules, Business Manager gets vendor directory & KPIs.</p>
+              <span class="feat-tag">PERSONALISED</span>
+            </div>
+            <div class="feat-tile">
+              <div class="feat-icon">💬</div>
+              <h3>WhatsApp Command Hub</h3>
+              <p>6 professional message templates, broadcast to filtered customer segments, pending orders quick-reply with confirm/dispatch buttons — all one click.</p>
+              <span class="feat-tag">WA READY</span>
+            </div>
+            <div class="feat-tile">
+              <div class="feat-icon">🔗</div>
+              <h3>Brand Connections</h3>
+              <p>Website live-status monitoring, social media stats tracker (IG, TikTok, FB), SEO health checklist, Google Analytics & Search Console quick links.</p>
+              <span class="feat-tag">ALL PLATFORMS</span>
+            </div>
+            <div class="feat-tile">
+              <div class="feat-icon">📱</div>
+              <h3>Mobile PWA App</h3>
+              <p>Installs on Android and iPhone as a full-screen native-like app — no App Store, no download required. Gold app icon. Works offline for cached pages.</p>
+              <span class="feat-tag">PWA</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Portal Mockups -->
+        <div style="margin-bottom:48px">
+          <h3 class="case-section-title">Portal — UI Previews</h3>
+          <p style="font-size:13px;color:var(--muted);margin-bottom:24px;line-height:1.7">A look inside the #AS KHUSHBOO Brand OS — every screen purpose-built for their team.</p>
+
+          <div class="mockup-grid">
+
+            <!-- Mockup 1: Dashboard -->
+            <div class="mockup-card large">
+              <div class="mockup-topbar">
+                <div class="mockup-dots">
+                  <div class="mockup-dot" style="background:#FF5F57"></div>
+                  <div class="mockup-dot" style="background:#FEBC2E"></div>
+                  <div class="mockup-dot" style="background:#28C840"></div>
+                </div>
+                <div class="mockup-title">Dashboard — #AS KHUSHBOO Brand OS</div>
+              </div>
+              <div class="mockup-body">
+                <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px">
+                  <div style="background:var(--ink3);border:1px solid var(--border);border-radius:8px;padding:10px;text-align:center">
+                    <div style="font-family:'Cormorant Garamond',serif;font-size:20px;color:var(--gold);font-weight:700">Rs.0</div>
+                    <div style="font-size:9px;color:var(--muted);margin-top:2px">REVENUE</div>
+                  </div>
+                  <div style="background:var(--ink3);border:1px solid var(--border);border-radius:8px;padding:10px;text-align:center">
+                    <div style="font-family:'Cormorant Garamond',serif;font-size:20px;color:#6EE7B7;font-weight:700">300</div>
+                    <div style="font-size:9px;color:var(--muted);margin-top:2px">BOTTLES</div>
+                  </div>
+                  <div style="background:var(--ink3);border:1px solid var(--border);border-radius:8px;padding:10px;text-align:center">
+                    <div style="font-family:'Cormorant Garamond',serif;font-size:20px;color:#C4B5FD;font-weight:700">6</div>
+                    <div style="font-size:9px;color:var(--muted);margin-top:2px">PRODUCTS</div>
+                  </div>
+                  <div style="background:var(--ink3);border:1px solid var(--border);border-radius:8px;padding:10px;text-align:center">
+                    <div style="font-family:'Cormorant Garamond',serif;font-size:20px;color:#93C5FD;font-weight:700">12</div>
+                    <div style="font-size:9px;color:var(--muted);margin-top:2px">TEAM</div>
+                  </div>
+                </div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+                  <div style="background:var(--ink3);border:1px solid var(--border);border-radius:8px;padding:12px">
+                    <div style="font-size:9px;color:var(--muted);letter-spacing:1px;margin-bottom:8px">LAUNCH CHECKLIST</div>
+                    <div style="height:3px;background:rgba(255,255,255,.05);border-radius:2px;margin-bottom:8px">
+                      <div style="height:100%;width:60%;background:linear-gradient(90deg,var(--gold),var(--goldL));border-radius:2px"></div>
+                    </div>
+                    <div style="display:flex;flex-direction:column;gap:4px">
+                      <div style="display:flex;align-items:center;gap:6px;font-size:10px;color:var(--muted)"><span style="color:#6EE7B7">✓</span> Product photography done</div>
+                      <div style="display:flex;align-items:center;gap:6px;font-size:10px;color:var(--muted)"><span style="color:#6EE7B7">✓</span> Instagram profile setup</div>
+                      <div style="display:flex;align-items:center;gap:6px;font-size:10px;color:var(--muted)"><span style="color:var(--border)">○</span> Finalize pricing</div>
+                      <div style="display:flex;align-items:center;gap:6px;font-size:10px;color:var(--muted)"><span style="color:var(--border)">○</span> Launch campaign</div>
+                    </div>
+                  </div>
+                  <div style="background:var(--ink3);border:1px solid var(--border);border-radius:8px;padding:12px">
+                    <div style="font-size:9px;color:var(--muted);letter-spacing:1px;margin-bottom:8px">QUICK AI ACTIONS</div>
+                    <div style="display:flex;flex-direction:column;gap:5px">
+                      <div style="padding:5px 8px;background:rgba(200,169,110,.06);border:1px solid rgba(200,169,110,.15);border-radius:5px;font-size:9px;color:var(--muted)">Launch strategy for Karachi?</div>
+                      <div style="padding:5px 8px;background:rgba(200,169,110,.06);border:1px solid rgba(200,169,110,.15);border-radius:5px;font-size:9px;color:var(--muted)">Write Instagram bio</div>
+                      <div style="padding:5px 8px;background:rgba(200,169,110,.06);border:1px solid rgba(200,169,110,.15);border-radius:5px;font-size:9px;color:var(--muted)">Recommend product pricing</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="mockup-label">DASHBOARD</div>
+            </div>
+
+            <!-- Mockup 2: Orders -->
+            <div class="mockup-card">
+              <div class="mockup-topbar">
+                <div class="mockup-dots">
+                  <div class="mockup-dot" style="background:#FF5F57"></div>
+                  <div class="mockup-dot" style="background:#FEBC2E"></div>
+                  <div class="mockup-dot" style="background:#28C840"></div>
+                </div>
+                <div class="mockup-title">Order Pipeline</div>
+              </div>
+              <div class="mockup-body">
+                <div style="display:flex;gap:4px;margin-bottom:10px;overflow-x:auto">
+                  <div style="padding:4px 8px;background:rgba(200,169,110,.1);border:1px solid rgba(200,169,110,.25);border-radius:5px;font-size:9px;color:var(--gold);white-space:nowrap">Pending (3)</div>
+                  <div style="padding:4px 8px;border:1px solid var(--border);border-radius:5px;font-size:9px;color:var(--muted);white-space:nowrap">Confirmed</div>
+                  <div style="padding:4px 8px;border:1px solid var(--border);border-radius:5px;font-size:9px;color:var(--muted);white-space:nowrap">Dispatch</div>
+                  <div style="padding:4px 8px;border:1px solid var(--border);border-radius:5px;font-size:9px;color:var(--muted);white-space:nowrap">Delivered</div>
+                </div>
+                <div style="display:flex;flex-direction:column;gap:5px">
+                  <div style="background:var(--ink3);border:1px solid var(--border);border-radius:7px;padding:9px 10px">
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
+                      <span style="font-size:11px;font-weight:600">Sara Ahmed</span>
+                      <span style="font-size:9px;padding:2px 7px;background:rgba(252,211,77,.08);border:1px solid rgba(252,211,77,.2);border-radius:8px;color:#FCD34D">Pending</span>
+                    </div>
+                    <div style="font-size:10px;color:var(--muted)">Shahkaar · Rs. 3,200 · Karachi</div>
+                    <div style="display:flex;gap:5px;margin-top:6px">
+                      <div style="padding:3px 8px;background:rgba(110,231,183,.06);border:1px solid rgba(110,231,183,.2);border-radius:4px;font-size:9px;color:#6EE7B7">✓ Confirm</div>
+                      <div style="padding:3px 8px;background:rgba(37,211,102,.06);border:1px solid rgba(37,211,102,.15);border-radius:4px;font-size:9px;color:rgba(37,211,102,.8)">📱 WA</div>
+                    </div>
+                  </div>
+                  <div style="background:var(--ink3);border:1px solid var(--border);border-radius:7px;padding:9px 10px">
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
+                      <span style="font-size:11px;font-weight:600">Hamza Malik</span>
+                      <span style="font-size:9px;padding:2px 7px;background:rgba(252,211,77,.08);border:1px solid rgba(252,211,77,.2);border-radius:8px;color:#FCD34D">Pending</span>
+                    </div>
+                    <div style="font-size:10px;color:var(--muted)">Rooh · Rs. 2,800 · Lahore</div>
+                  </div>
+                </div>
+              </div>
+              <div class="mockup-label">ORDERS</div>
+            </div>
+
+            <!-- Mockup 3: AI Brain -->
+            <div class="mockup-card">
+              <div class="mockup-topbar">
+                <div class="mockup-dots">
+                  <div class="mockup-dot" style="background:#FF5F57"></div>
+                  <div class="mockup-dot" style="background:#FEBC2E"></div>
+                  <div class="mockup-dot" style="background:#28C840"></div>
+                </div>
+                <div class="mockup-title">AI Business Brain</div>
+              </div>
+              <div class="mockup-body">
+                <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:5px;margin-bottom:10px">
+                  <div style="background:rgba(200,169,110,.08);border:1px solid rgba(200,169,110,.25);border-radius:6px;padding:8px;text-align:center">
+                    <div style="font-size:14px">♛</div><div style="font-size:9px;color:var(--gold);margin-top:3px">CEO</div>
+                  </div>
+                  <div style="background:var(--ink3);border:1px solid var(--border);border-radius:6px;padding:8px;text-align:center">
+                    <div style="font-size:14px">📣</div><div style="font-size:9px;color:var(--muted);margin-top:3px">Marketing</div>
+                  </div>
+                  <div style="background:var(--ink3);border:1px solid var(--border);border-radius:6px;padding:8px;text-align:center">
+                    <div style="font-size:14px">📈</div><div style="font-size:9px;color:var(--muted);margin-top:3px">Sales</div>
+                  </div>
+                </div>
+                <div style="background:var(--ink3);border:1px solid var(--border);border-radius:8px;padding:10px;margin-bottom:8px">
+                  <div style="font-size:10px;color:var(--muted);line-height:1.6">Shahkaar launch ke liye best strategy kya hai Karachi market mein?</div>
+                </div>
+                <div style="background:rgba(200,169,110,.04);border:1px solid rgba(200,169,110,.12);border-radius:8px;padding:10px">
+                  <div style="font-size:10px;color:rgba(237,229,216,.6);line-height:1.7">Karachi market mein Shahkaar ka positioning premium evening fragrance ke taur par karo. Instagram reels + micro-influencer collaborations — 50K-200K followers walay zyada effective hain...</div>
+                </div>
+              </div>
+              <div class="mockup-label">AI BRAIN</div>
+            </div>
+
+            <!-- Mockup 4: Attendance -->
+            <div class="mockup-card">
+              <div class="mockup-topbar">
+                <div class="mockup-dots">
+                  <div class="mockup-dot" style="background:#FF5F57"></div>
+                  <div class="mockup-dot" style="background:#FEBC2E"></div>
+                  <div class="mockup-dot" style="background:#28C840"></div>
+                </div>
+                <div class="mockup-title">Team Attendance</div>
+              </div>
+              <div class="mockup-body">
+                <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:10px">
+                  <div style="background:rgba(110,231,183,.06);border:1px solid rgba(110,231,183,.15);border-radius:7px;padding:8px;text-align:center">
+                    <div style="font-size:18px;font-weight:700;color:#6EE7B7">8</div>
+                    <div style="font-size:9px;color:var(--muted)">Present</div>
+                  </div>
+                  <div style="background:rgba(252,211,77,.06);border:1px solid rgba(252,211,77,.15);border-radius:7px;padding:8px;text-align:center">
+                    <div style="font-size:18px;font-weight:700;color:#FCD34D">2</div>
+                    <div style="font-size:9px;color:var(--muted)">Late</div>
+                  </div>
+                  <div style="background:rgba(252,165,165,.06);border:1px solid rgba(252,165,165,.15);border-radius:7px;padding:8px;text-align:center">
+                    <div style="font-size:18px;font-weight:700;color:#FCA5A5">1</div>
+                    <div style="font-size:9px;color:var(--muted)">Absent</div>
+                  </div>
+                </div>
+                <div style="display:flex;flex-direction:column;gap:4px">
+                  <div style="display:flex;justify-content:space-between;align-items:center;padding:6px 8px;background:var(--ink3);border-radius:6px">
+                    <span style="font-size:10px">Ali Hassan</span>
+                    <div style="display:flex;align-items:center;gap:6px">
+                      <span style="font-size:9px;color:var(--muted)">9:02 AM</span>
+                      <span style="font-size:9px;padding:2px 6px;background:rgba(110,231,183,.08);border-radius:4px;color:#6EE7B7">✅</span>
+                    </div>
+                  </div>
+                  <div style="display:flex;justify-content:space-between;align-items:center;padding:6px 8px;background:var(--ink3);border-radius:6px">
+                    <span style="font-size:10px">Zara Khan</span>
+                    <div style="display:flex;align-items:center;gap:6px">
+                      <span style="font-size:9px;color:var(--muted)">9:34 AM</span>
+                      <span style="font-size:9px;padding:2px 6px;background:rgba(252,211,77,.08);border-radius:4px;color:#FCD34D">⏰</span>
+                    </div>
+                  </div>
+                  <div style="display:flex;justify-content:space-between;align-items:center;padding:6px 8px;background:var(--ink3);border-radius:6px">
+                    <span style="font-size:10px">Bilal Ahmed</span>
+                    <div style="display:flex;align-items:center;gap:6px">
+                      <span style="font-size:9px;color:var(--muted)">—</span>
+                      <span style="font-size:9px;padding:2px 6px;background:rgba(252,165,165,.08);border-radius:4px;color:#FCA5A5">❌</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="mockup-label">ATTENDANCE</div>
+            </div>
+
+            <!-- Mockup 5: Intelligence -->
+            <div class="mockup-card large">
+              <div class="mockup-topbar">
+                <div class="mockup-dots">
+                  <div class="mockup-dot" style="background:#FF5F57"></div>
+                  <div class="mockup-dot" style="background:#FEBC2E"></div>
+                  <div class="mockup-dot" style="background:#28C840"></div>
+                </div>
+                <div class="mockup-title">Brand Intelligence Layer</div>
+              </div>
+              <div class="mockup-body">
+                <div style="display:grid;grid-template-columns:1fr 2fr;gap:12px">
+                  <div style="background:rgba(200,169,110,.04);border:1px solid rgba(200,169,110,.15);border-radius:10px;padding:14px;text-align:center">
+                    <div style="font-size:9px;color:var(--muted);letter-spacing:1px;margin-bottom:6px">BRAND HEALTH</div>
+                    <div style="font-family:'Cormorant Garamond',serif;font-size:48px;font-weight:700;color:var(--gold);line-height:1">78</div>
+                    <div style="font-size:9px;padding:3px 10px;background:rgba(200,169,110,.08);border:1px solid rgba(200,169,110,.2);border-radius:10px;color:var(--gold);display:inline-block;margin-top:6px">Good</div>
+                    <div style="margin-top:10px;display:flex;flex-direction:column;gap:4px">
+                      <div>
+                        <div style="display:flex;justify-content:space-between;font-size:9px;color:var(--muted);margin-bottom:2px"><span>Revenue</span><span style="color:var(--gold)">82</span></div>
+                        <div style="height:3px;background:rgba(255,255,255,.05);border-radius:2px"><div style="width:82%;height:100%;background:var(--gold);border-radius:2px"></div></div>
+                      </div>
+                      <div>
+                        <div style="display:flex;justify-content:space-between;font-size:9px;color:var(--muted);margin-bottom:2px"><span>Delivery</span><span style="color:#6EE7B7">90</span></div>
+                        <div style="height:3px;background:rgba(255,255,255,.05);border-radius:2px"><div style="width:90%;height:100%;background:#6EE7B7;border-radius:2px"></div></div>
+                      </div>
+                      <div>
+                        <div style="display:flex;justify-content:space-between;font-size:9px;color:var(--muted);margin-bottom:2px"><span>Orders</span><span style="color:#FCD34D">65</span></div>
+                        <div style="height:3px;background:rgba(255,255,255,.05);border-radius:2px"><div style="width:65%;height:100%;background:#FCD34D;border-radius:2px"></div></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div style="display:flex;flex-direction:column;gap:8px">
+                    <div style="background:var(--ink3);border:1px solid var(--border);border-radius:8px;padding:10px">
+                      <div style="font-size:9px;color:var(--gold);letter-spacing:1px;margin-bottom:5px">🤖 TODAY'S AI BRIEFING</div>
+                      <div style="font-size:10px;color:rgba(237,229,216,.6);line-height:1.7;font-style:italic">"Good morning! Is hafte 12 orders aaye aur revenue Rs.38,400 raha. Shahkaar sabse zyada sell hua — 5 orders. Aaj priority: 3 pending orders dispatch karo..."</div>
+                    </div>
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
+                      <div style="background:rgba(252,165,165,.05);border:1px solid rgba(252,165,165,.15);border-radius:7px;padding:9px">
+                        <div style="font-size:9px;color:#FCA5A5;margin-bottom:3px">🚨 ALERT</div>
+                        <div style="font-size:10px;color:var(--muted)">5 orders 3+ days pending</div>
+                      </div>
+                      <div style="background:rgba(110,231,183,.05);border:1px solid rgba(110,231,183,.12);border-radius:7px;padding:9px">
+                        <div style="font-size:9px;color:#6EE7B7;margin-bottom:3px">🎉 GREAT</div>
+                        <div style="font-size:10px;color:var(--muted)">90% delivery rate!</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="mockup-label">INTELLIGENCE</div>
+            </div>
+
+          </div>
+          <p style="font-size:12px;color:rgba(237,229,216,.25);text-align:center;margin-top:12px;letter-spacing:.5px">
+            UI PREVIEWS — Real screenshots available upon request
+          </p>
+        </div>
+
+        <!-- Tech Stack -->
+        <div style="margin-bottom:48px">
+          <h3 class="case-section-title">Technology Stack</h3>
+          <div class="tech-stack">
+            <div class="tech-badge">React / JSX</div>
+            <div class="tech-badge">Firebase Firestore</div>
+            <div class="tech-badge">Firebase Auth</div>
+            <div class="tech-badge">Gemini AI</div>
+            <div class="tech-badge">Cloudinary</div>
+            <div class="tech-badge">Vite</div>
+            <div class="tech-badge">Vercel</div>
+            <div class="tech-badge">PWA / Service Worker</div>
+          </div>
+        </div>
+
+        <!-- Results -->
+        <div style="margin-bottom:48px">
+          <h3 class="case-section-title">The Result</h3>
+          <div class="result-strip">
+            <div class="result-item">
+              <div class="result-num">8,000+</div>
+              <div class="result-label">Lines of production code</div>
+            </div>
+            <div class="result-item">
+              <div class="result-num">36+</div>
+              <div class="result-label">Tools & features built</div>
+            </div>
+            <div class="result-item">
+              <div class="result-num">10+</div>
+              <div class="result-label">Tools replaced by one portal</div>
+            </div>
+            <div class="result-item">
+              <div class="result-num">11</div>
+              <div class="result-label">AI modules integrated</div>
+            </div>
+          </div>
+          <p style="font-size:14px;color:var(--muted);line-height:1.85;font-weight:300;max-width:680px">
+            The portal launched as a PWA app, deployed on Vercel, with real-time data via Firebase — completely free to operate. The entire brand now runs from one screen, accessible to every team member from their phone.
+          </p>
+        </div>
+
+        <!-- Testimonial -->
+        <div class="testimonial-block">
+          <p class="testimonial-text">"What was built for us is extraordinary — 36+ tools, 11 AI modules, the full team system, analytics, and a mobile app, all in one place. Before this, everything was WhatsApp threads and guesswork. Now the entire brand runs from one screen. This is the future of how Pakistani brands should operate."</p>
+          <div class="testimonial-author">
+            <div class="testi-av">🌹</div>
+            <div>
+              <div class="testi-name">#AS KHUSHBOO</div>
+              <div class="testi-role">Luxury Perfume Brand · Karachi</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="section pricing-section" id="pricing">
+  <div class="section-inner">
+    <span class="eyebrow">INVESTMENT</span>
+    <h2 class="section-h2">Transparent pricing.<br/><em>No surprises.</em></h2>
+    <div class="rule"></div>
+    <p class="section-p" style="margin-top:16px">Whether you want a custom-built portal or a subscription platform — there's an option for every stage of your brand.</p>
+
+    <!-- Tabs -->
+    <div style="margin-top:40px">
+      <div class="pricing-tabs">
+        <button class="ptab active" onclick="switchTab('reignn')">REIGNN Subscription</button>
+        <button class="ptab" onclick="switchTab('custom')">Custom Build</button>
+        <button class="ptab" onclick="switchTab('compare')">Compare</button>
+      </div>
+
+      <!-- REIGNN Tab -->
+      <div class="pricing-panel active" id="tab-reignn">
+        <div class="price-grid">
+          <div class="price-card">
+            <div class="price-name">STARTER</div>
+            <div class="price-amount"><span class="curr">Rs.</span>1,999</div>
+            <div class="price-period">per month · billed monthly</div>
+            <div class="price-divider"></div>
+            <ul class="price-list">
+              <li><span class="ck">✦</span>Order Management Pipeline</li>
+              <li><span class="ck">✦</span>Products & Inventory (up to 20)</li>
+              <li><span class="ck">✦</span>Team up to 5 members</li>
+              <li><span class="ck">✦</span>Basic Sales Analytics</li>
+              <li><span class="ck">✦</span>WhatsApp Templates</li>
+              <li><span class="ck">✦</span>Customer Loyalty Program</li>
+              <li><span class="ck">✦</span>Mobile App (PWA)</li>
+            </ul>
+            <a href="https://ashirraza246.github.io/reignn/" target="_blank"><button class="price-btn ghost">Get Started</button></a>
+          </div>
+          <div class="price-card featured">
+            <div class="price-badge">MOST POPULAR</div>
+            <div class="price-name">GROWTH</div>
+            <div class="price-amount"><span class="curr">Rs.</span>3,999</div>
+            <div class="price-period">per month · billed monthly</div>
+            <div class="price-divider"></div>
+            <ul class="price-list">
+              <li><span class="ck">✦</span>Everything in Starter</li>
+              <li><span class="ck">✦</span>Unlimited Products</li>
+              <li><span class="ck">✦</span>Team up to 15 members</li>
+              <li><span class="ck">✦</span>AI Business Brain — 11 Modules</li>
+              <li><span class="ck">✦</span>Brand Intelligence Layer</li>
+              <li><span class="ck">✦</span>Coupon Manager</li>
+              <li><span class="ck">✦</span>Influencer & Content Tracker</li>
+              <li><span class="ck">✦</span>Return & Refund System</li>
+              <li><span class="ck">✦</span>Brand Connections Dashboard</li>
+              <li><span class="ck">✦</span>Role-Based Tools Hub</li>
+              <li><span class="ck">✦</span>Priority Support</li>
+            </ul>
+            <a href="https://ashirraza246.github.io/reignn/" target="_blank"><button class="price-btn gold">Get Early Access</button></a>
+          </div>
+          <div class="price-card">
+            <div class="price-name">ENTERPRISE</div>
+            <div class="price-amount" style="font-size:34px">Custom</div>
+            <div class="price-period">tailored to your scale</div>
+            <div class="price-divider"></div>
+            <ul class="price-list">
+              <li><span class="ck">✦</span>Everything in Growth</li>
+              <li><span class="ck">✦</span>Unlimited team members</li>
+              <li><span class="ck">✦</span>Custom domain & branding</li>
+              <li><span class="ck">✦</span>Dedicated onboarding</li>
+              <li><span class="ck">✦</span>Custom features built</li>
+              <li><span class="ck">✦</span>Direct WhatsApp support</li>
+              <li><span class="ck">✦</span>E-Commerce integration</li>
+            </ul>
+            <a href="#contact"><button class="price-btn ghost">Contact Us</button></a>
+          </div>
+        </div>
+        <p style="text-align:center;font-size:13px;color:var(--muted)">
+          🎁 Early access clients lock in these rates permanently. First 50 spots only.
+        </p>
+      </div>
+
+      <!-- Custom Build Tab -->
+      <div class="pricing-panel" id="tab-custom">
+        <div class="price-grid">
+          <div class="price-card">
+            <div class="price-name">STARTER BUILD</div>
+            <div class="price-amount"><span class="curr">Rs.</span>18,000</div>
+            <div class="price-period">one-time · delivery in 7 days</div>
+            <div class="price-divider"></div>
+            <ul class="price-list">
+              <li><span class="ck">✦</span>Order management pipeline</li>
+              <li><span class="ck">✦</span>Product catalogue with images</li>
+              <li><span class="ck">✦</span>Basic inventory tracking</li>
+              <li><span class="ck">✦</span>WhatsApp message integration</li>
+              <li><span class="ck">✦</span>Customer loyalty system</li>
+              <li><span class="ck">✦</span>Firebase backend setup</li>
+              <li><span class="ck">✦</span>Vercel deployment</li>
+              <li><span class="ck">✦</span>Mobile PWA app</li>
+            </ul>
+            <a href="#contact"><button class="price-btn ghost">Get a Quote</button></a>
+          </div>
+          <div class="price-card featured">
+            <div class="price-badge">FULL SYSTEM</div>
+            <div class="price-name">FULL BRAND OS</div>
+            <div class="price-amount"><span class="curr">Rs.</span>45,000</div>
+            <div class="price-period">one-time · delivery in 3–4 weeks</div>
+            <div class="price-divider"></div>
+            <ul class="price-list">
+              <li><span class="ck">✦</span>Everything in Starter</li>
+              <li><span class="ck">✦</span>Full team management OS</li>
+              <li><span class="ck">✦</span>Attendance + leave system</li>
+              <li><span class="ck">✦</span>AI Business Brain (6 modules)</li>
+              <li><span class="ck">✦</span>Brand Intelligence Layer</li>
+              <li><span class="ck">✦</span>Analytics + expense tracker</li>
+              <li><span class="ck">✦</span>Coupon + influencer manager</li>
+              <li><span class="ck">✦</span>Content calendar</li>
+              <li><span class="ck">✦</span>Brand connections dashboard</li>
+              <li><span class="ck">✦</span>Role-based tools hub</li>
+              <li><span class="ck">✦</span>PWA mobile app + custom icon</li>
+            </ul>
+            <a href="#contact"><button class="price-btn gold">Start Your Project</button></a>
+          </div>
+          <div class="price-card">
+            <div class="price-name">MONTHLY SUPPORT</div>
+            <div class="price-amount"><span class="curr">Rs.</span>5,500</div>
+            <div class="price-period">per month · after initial build</div>
+            <div class="price-divider"></div>
+            <ul class="price-list">
+              <li><span class="ck">✦</span>Bug fixes & maintenance</li>
+              <li><span class="ck">✦</span>Up to 3 new features/month</li>
+              <li><span class="ck">✦</span>Performance optimization</li>
+              <li><span class="ck">✦</span>UI/UX improvements</li>
+              <li><span class="ck">✦</span>Priority WhatsApp support</li>
+              <li><span class="ck">✦</span>Monthly progress report</li>
+            </ul>
+            <a href="#contact"><button class="price-btn ghost">Add to Project</button></a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Compare Tab -->
+      <div class="pricing-panel" id="tab-compare">
+        <div style="background:var(--ink2);border:1px solid var(--border);border-radius:16px;overflow:hidden;overflow-x:auto">
+          <table class="compare-table">
+            <thead>
+              <tr style="background:var(--ink3)">
+                <th style="width:35%">FEATURE</th>
+                <th>REIGNN<br/><span style="color:var(--gold);font-size:10px">Subscription</span></th>
+                <th>CUSTOM<br/><span style="color:var(--blue);font-size:10px">One-time Build</span></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>Order Management</td><td><span class="ct-yes">✓</span></td><td><span class="ct-yes">✓</span></td></tr>
+              <tr><td>Team & Attendance</td><td><span class="ct-yes">✓</span></td><td><span class="ct-yes">✓</span></td></tr>
+              <tr><td>AI Business Brain</td><td><span class="ct-val">Growth+</span></td><td><span class="ct-yes">✓</span></td></tr>
+              <tr><td>Brand Intelligence Layer</td><td><span class="ct-val">Growth+</span></td><td><span class="ct-yes">✓</span></td></tr>
+              <tr><td>Custom Branding</td><td><span class="ct-val">Enterprise</span></td><td><span class="ct-yes">✓</span></td></tr>
+              <tr><td>Custom Features</td><td><span class="ct-no">—</span></td><td><span class="ct-yes">✓</span></td></tr>
+              <tr><td>E-Commerce Integration</td><td><span class="ct-val">Enterprise</span></td><td><span class="ct-yes">✓</span></td></tr>
+              <tr><td>Mobile PWA App</td><td><span class="ct-yes">✓</span></td><td><span class="ct-yes">✓</span></td></tr>
+              <tr><td>Setup Time</td><td><span class="ct-val">48 hours</span></td><td><span class="ct-val">1–4 weeks</span></td></tr>
+              <tr><td>Ongoing Cost</td><td><span class="ct-val">Rs.1,999–3,999/mo</span></td><td><span class="ct-val">Rs.5,500/mo (optional)</span></td></tr>
+              <tr><td>Best For</td><td style="font-size:12px;color:var(--muted)">Brands wanting fast setup + low upfront</td><td style="font-size:12px;color:var(--muted)">Brands wanting full ownership + custom features</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:20px">
+          <div style="padding:20px;background:rgba(200,169,110,.04);border:1px solid rgba(200,169,110,.15);border-radius:12px;text-align:center">
+            <p style="font-size:13px;color:var(--muted);margin-bottom:12px">Want a subscription portal ready in 48 hours?</p>
+            <a href="https://ashirraza246.github.io/reignn/" target="_blank"><button class="price-btn gold" style="padding:10px 24px;width:auto">Explore REIGNN →</button></a>
+          </div>
+          <div style="padding:20px;background:rgba(147,197,253,.03);border:1px solid rgba(147,197,253,.12);border-radius:12px;text-align:center">
+            <p style="font-size:13px;color:var(--muted);margin-bottom:12px">Want a fully custom portal built for your brand?</p>
+            <a href="#contact"><button class="price-btn ghost" style="padding:10px 24px;width:auto">Start a Custom Project</button></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="section" id="services" style="background:rgba(255,255,255,0.01);border-top:1px solid var(--border)">
+  <div class="section-inner">
+    <span class="eyebrow">SERVICES</span>
+    <h2 class="section-h2">What I can build<br/><em>for your brand.</em></h2>
+    <div class="rule"></div>
+    <p class="section-p" style="margin-top:16px">Every portal is custom-built for your brand — your products, your team structure, your workflows. No templates. No compromises.</p>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-num">01</div>
+        <div class="service-icon">🖥️</div>
+        <h3>Starter Brand OS</h3>
+        <p>Order management, product catalogue with images, basic inventory tracking, and WhatsApp integration. Everything you need to start running your brand properly.</p>
+        <div class="service-price">From Rs. 18,000 <span style="color:var(--muted);font-weight:300">one-time</span></div>
+      </div>
+      <div class="service-card">
+        <div class="service-num">02</div>
+        <div class="service-icon">⚡</div>
+        <h3>Full Brand OS</h3>
+        <p>The complete system — everything in Starter plus team management, AI Brain, analytics engine, Brand Intelligence Layer, social media tracker, and PWA mobile app.</p>
+        <div class="service-price">From Rs. 45,000 <span style="color:var(--muted);font-weight:300">one-time</span></div>
+      </div>
+      <div class="service-card">
+        <div class="service-num">03</div>
+        <div class="service-icon">🔧</div>
+        <h3>Monthly Support</h3>
+        <p>Ongoing portal maintenance, new feature additions, bug fixes, and performance improvements. Keep your system growing as your brand grows.</p>
+        <div class="service-price">From Rs. 5,500 <span style="color:var(--muted);font-weight:300">per month</span></div>
+      </div>
+    </div>
+
+    <!-- REIGNN CTA -->
+    <div class="reignn-cta">
+      <div class="reignn-cta-eyebrow">ALSO AVAILABLE</div>
+      <h3 class="reignn-cta-title">Want a portal <em>today?</em><br/>Try REIGNN.</h3>
+      <p class="reignn-cta-sub">REIGNN is my subscription platform — get a fully configured brand OS in 48 hours, at a fraction of the custom build cost. Early access is open now.</p>
+      <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;position:relative">
+        <a href="https://ashirraza246.github.io/reignn/" target="_blank" class="btn-gold">Explore REIGNN →</a>
+        <a href="#contact" class="btn-outline">Custom Build Inquiry</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="section" id="contact">
+  <div class="section-inner">
+    <span class="eyebrow">CONTACT</span>
+    <h2 class="section-h2">Let's build something<br/><em>remarkable together.</em></h2>
+    <div class="rule"></div>
+    <div class="contact-wrap">
+      <div class="contact-info">
+        <h3>Ready when you are.</h3>
+        <p>Whether you're a brand owner who needs a proper system, or a business curious about what REIGNN can do for you — I'd love to have a conversation.</p>
+        <p>Based in Karachi. Working with brands across Pakistan.</p>
+        <div class="contact-links">
+          <a href="https://wa.me/923183916019" target="_blank" class="contact-link">
+            <span class="contact-link-icon">📱</span>
+            <div>
+              <div class="contact-link-text">WhatsApp</div>
+              <div class="contact-link-sub">+92 318 391 6019 — fastest response</div>
+            </div>
+          </a>
+          <a href="mailto:ashirraza246@gmail.com" class="contact-link">
+            <span class="contact-link-icon">✉️</span>
+            <div>
+              <div class="contact-link-text">Email</div>
+              <div class="contact-link-sub">ashirraza246@gmail.com</div>
+            </div>
+          </a>
+          <a href="https://ashirraza246.github.io/reignn/" target="_blank" class="contact-link">
+            <span class="contact-link-icon">🌐</span>
+            <div>
+              <div class="contact-link-text">REIGNN Platform</div>
+              <div class="contact-link-sub">ashirraza246.github.io/reignn</div>
+            </div>
+          </a>
+        </div>
+      </div>
+      <div class="contact-form-area">
+        <h3>Send a Message</h3>
+        <form onsubmit="handleContact(event)">
+          <div class="form-group">
+            <label class="form-label">YOUR NAME</label>
+            <input type="text" class="form-input" placeholder="Ahmed Khan" required id="cName"/>
+          </div>
+          <div class="form-group">
+            <label class="form-label">BRAND / COMPANY</label>
+            <input type="text" class="form-input" placeholder="Your Brand Name" id="cBrand"/>
+          </div>
+          <div class="form-group">
+            <label class="form-label">EMAIL</label>
+            <input type="email" class="form-input" placeholder="you@email.com" required id="cEmail"/>
+          </div>
+          <div class="form-group">
+            <label class="form-label">MESSAGE</label>
+            <textarea class="form-input" placeholder="Tell me about your brand and what you need..." id="cMsg"></textarea>
+          </div>
+          <button type="submit" class="btn-gold" style="width:100%;justify-content:center" id="cBtn">
+            Send Message →
+          </button>
+          <div id="cSuccess" style="display:none;margin-top:12px;padding:12px 16px;
+            background:rgba(110,231,183,0.07);border:1px solid rgba(110,231,183,0.2);
+            border-radius:8px;color:var(--green);font-size:13px;text-align:center">
+            ✓ Message sent — I'll be in touch within 24 hours.
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-name">Ashir <span>Raza</span></div>
+  <div class="footer-links">
+    <a href="#work" class="footer-link">WORK</a>
+    <a href="#pricing" class="footer-link">PRICING</a>
+    <a href="#services" class="footer-link">SERVICES</a>
+    <a href="#contact" class="footer-link">CONTACT</a>
+    <a href="https://ashirraza246.github.io/reignn/" target="_blank" class="footer-link">REIGNN</a>
+  </div>
+  <div class="footer-copy">© 2025 ASHIR RAZA · KARACHI</div>
+</footer>
+
+<script>
+// Cursor
+const cur = document.getElementById('cur');
+const curR = document.getElementById('curR');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{
+  mx=e.clientX;my=e.clientY;
+  cur.style.left=mx-3.5+'px';cur.style.top=my-3.5+'px';
+});
+(function anim(){
+  rx+=(mx-rx-14)*.1;ry+=(my-ry-14)*.1;
+  curR.style.left=rx+'px';curR.style.top=ry+'px';
+  requestAnimationFrame(anim);
+})();
+document.querySelectorAll('a,button,input,textarea').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{cur.style.transform='scale(3)';curR.style.transform='scale(1.5)'});
+  el.addEventListener('mouseleave',()=>{cur.style.transform='scale(1)';curR.style.transform='scale(1)'});
+});
+
+// Scroll reveal
+const io=new IntersectionObserver((entries)=>{
+  entries.forEach((e,i)=>{
+    if(e.isIntersecting){
+      e.target.style.animation=`fadeUp .65s ${i*.07}s ease forwards`;
+      io.unobserve(e.target);
+    }
+  });
+},{threshold:.08});
+document.querySelectorAll('.feat-tile,.about-stat-card,.service-card,.result-item,.tech-badge').forEach(el=>{
+  el.style.opacity='0';io.observe(el);
+});
+
+// Contact form
+async function handleContact(e){
+  e.preventDefault();
+  const btn=document.getElementById('cBtn');
+  btn.textContent='Sending...';btn.disabled=true;
+  const fd=new FormData();
+  fd.append('name',document.getElementById('cName').value);
+  fd.append('brand',document.getElementById('cBrand').value);
+  fd.append('email',document.getElementById('cEmail').value);
+  fd.append('message',document.getElementById('cMsg').value);
+  fd.append('_subject','Portfolio Contact — '+document.getElementById('cName').value);
+  try{
+    const res=await fetch('https://formspree.io/f/xaqpdwqp',{method:'POST',body:fd,headers:{'Accept':'application/json'}});
+    const data=await res.json();
+    if(data.ok){
+      document.querySelector('form').style.display='none';
+      document.getElementById('cSuccess').style.display='block';
+    } else {btn.textContent='Try Again';btn.disabled=false;}
+  }catch{btn.textContent='Try Again';btn.disabled=false;}
+}
+
+// Pricing tabs
+function switchTab(tab) {
+  document.querySelectorAll('.pricing-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.ptab').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-'+tab).classList.add('active');
+  event.target.classList.add('active');
+}
+
+// Nav scroll
+window.addEventListener('scroll',()=>{
+  document.querySelector('nav').style.borderBottomColor=
+    window.scrollY>60?'rgba(200,169,110,0.2)':'rgba(200,169,110,0.13)';
+});
+</script>
+</body>
+</html>
